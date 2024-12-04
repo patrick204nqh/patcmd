@@ -1,5 +1,10 @@
+inherit_gem:
+  rubocop-shopify: rubocop.yml
+
 AllCops:
   TargetRubyVersion: 3.0
+  Exclude:
+    - '.git/**/*'
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes
