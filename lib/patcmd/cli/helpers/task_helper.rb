@@ -33,8 +33,8 @@ module Patcmd
           puts "  Description: #{task["description"]}"
           puts "  Path: #{task["path"]}"
           puts "  Command: #{task["command"]}"
-          puts "  Args: #{task["args"].join(" ")}" if task["args"].any?
-          if task["environments"].any?
+          puts "  Args: #{task["args"].join(" ")}" if task["args"]&.any?
+          if task["environments"]&.any?
             envs = task["environments"].map { |k, v| "#{k}=#{v}" }.join(", ")
             puts "  Environments: #{envs}"
           end
