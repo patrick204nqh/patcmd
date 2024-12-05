@@ -9,6 +9,13 @@ require_relative "exec_command"
 module Patcmd
   module CLI
     class Core < Thor
+      class << self
+        # Ensure the CLI exits with a non-zero status code on failure
+        def exit_on_failure?
+          true
+        end
+      end
+
       register InitCommand, "init", "init", "Initialize the PatCmd configuration"
       register AddCommand, "add", "add", "Add a new task to the config"
       register ListCommand, "list", "list", "List all configured tasks"

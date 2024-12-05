@@ -11,13 +11,6 @@ module Patcmd
       # Define global options
       class_option :config, type: :string, default: CONFIG_PATH, desc: "Path to configuration file"
 
-      class << self
-        # Ensure the CLI exits with a non-zero status code on failure
-        def exit_on_failure?
-          true
-        end
-      end
-
       def initialize(*args)
         super
         @config_manager = ConfigurationManager.new(options[:config])

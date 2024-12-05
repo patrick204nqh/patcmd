@@ -16,7 +16,18 @@ module Patcmd
 
       def init_config
         unless File.exist?(@config_path)
-          default_config = { "tasks" => [] }
+          default_task = {
+            "category" => "Default",
+            "name" => "HelloWorld",
+            "description" => "A simple Hello World task",
+            "path" => "/usr/local/bin",
+            "action" => "execute",
+            "command" => "echo",
+            "args" => ["Hello, World!"],
+            "environments" => { "ENV" => "development" },
+          }
+
+          default_config = { "tasks" => [default_task] }
           FileUtils.mkdir_p(File.dirname(@config_path))
           File.write(@config_path, default_config.to_yaml)
         end
