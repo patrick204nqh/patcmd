@@ -2,23 +2,23 @@
 
 module Patcmd
   module CLI
-    class BaseCommand < Thor
-      include Helpers::TaskHelper
-      include Helpers::Logger
+    module Commands
+      class BaseCommand < Thor
+        CONFIG_PATH = File.expand_path("~/.patcmd/config.yml")
 
-      CONFIG_PATH = File.expand_path("~/.patcmd/config.yml")
+        # Define global options
+        class_option :config, type: :string, default: CONFIG_PATH, desc: "Path to configuration file"
 
-      # Define global options
-      class_option :config, type: :string, default: CONFIG_PATH, desc: "Path to configuration file"
+        def initialize(*args)
+          super
+          @config_manager = ConfigurationManager.new(options[:config])
+          @logger = Logger.new(verbose: options[:verbose])
+        end
 
-      def initialize(*args)
-        super
-        @config_manager = ConfigurationManager.new(options[:config])
+        private
+
+        attr_reader :config_manager, :logger
       end
-
-      private
-
-      attr_reader :config_manager
     end
   end
 end

@@ -7,6 +7,7 @@ module Patcmd
         @task = task
         @options = options
         @env_vars = env_vars
+        @logger = Logger.new(verbose: options[:verbose])
       end
 
       def execute
@@ -14,23 +15,24 @@ module Patcmd
         path = PathResolver.expand(@task.path)
 
         unless Dir.exist?(path)
-          puts "Path not found: #{path}"
+          @logger.error("Path not found: #{path}")
           exit(1)
         end
 
-        puts "Executing '#{@task.description}' in #{path}"
-        puts "Command: #{command}" if @options[:verbose]
-        puts "Environment Variables: #{@env_vars}" if @options[:verbose] && @env_vars.any?
+        @logger.info("Executing '#{@task.description}' in #{path}")
+        @logger.info("Command: #{command}") if @options[:verbose]
+        @logger.info("Environment Variables: #{@env_vars}") if @options[:verbose] && @env_vars.any?
 
         Dir.chdir(path) do
           result = system(@env_vars, command)
           unless result
-            puts "Command execution failed."
+            @logger.error("Command execution failed.")
             exit(1)
           end
         end
+        @logger.success("Command executed successfully.")
       rescue KeyError => e
-        puts "Missing option for command substitution: #{e.message}"
+        @logger.error("Missing option for command substitution: #{e.message}")
         exit(1)
       end
 

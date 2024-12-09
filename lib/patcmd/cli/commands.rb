@@ -2,13 +2,13 @@
 
 require "thor"
 
-require_relative "core"
+require_relative "commands/core"
 
 module Patcmd
   module CLI
     class << self
       def start(argv)
-        Core.start(argv)
+        Commands::Core.start(argv)
       end
     end
   end
