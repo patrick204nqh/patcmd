@@ -4,6 +4,7 @@ inherit_gem:
 AllCops:
   TargetRubyVersion: 3.0
   Exclude:
+    - 'Gemfile'
     - '.git/**/*'
 
 Style/StringLiterals:
