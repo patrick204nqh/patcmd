@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative "task"
-require_relative "environment_preparer"
-require_relative "command_runner"
-require_relative "path_resolver"
+require "patcmd/cli/task"
+require "patcmd/cli/environment_preparer"
+require "patcmd/cli/command_runner"
+require "patcmd/cli/path_resolver"
 
 module Patcmd
   module CLI

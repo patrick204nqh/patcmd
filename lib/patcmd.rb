@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "patcmd/version"
-require_relative "patcmd/cli"
+require "patcmd/version"
+require "patcmd/cli"
 
 module Patcmd
 end

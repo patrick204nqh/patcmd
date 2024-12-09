@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 require "thor"
-
-require_relative "commands/core"
+require "patcmd/cli/commands/core"
 
 module Patcmd
   module CLI
