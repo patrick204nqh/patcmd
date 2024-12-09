@@ -21,7 +21,9 @@ module Patcmd
           Services::TaskValidator.validate(task)
           config_manager.add_task(task)
           Presenters::TaskPresenter.new($stdout).display(task)
-          logger.success("Added task '#{task["name"]}' under category '#{task["category"]}' with action '#{task["action"]}'.")
+          logger.success(
+            "Added task '#{task["name"]}' under category '#{task["category"]}' with action '#{task["action"]}'.",
+          )
         rescue Services::TaskValidator::ValidationError => e
           logger.error("Error: #{e.message}")
           exit(1)
