@@ -65,15 +65,15 @@ Configuration initialized at /home/username/.patcmd/config.yml
 ### Add a New Task
 
 ```bash
-patcmd add \                   
-  --name "Backup" \
+patcmd add --name "Backup" \
   --description "Backup the database" \
   --category "Utility" \
   --path "/usr/local/bin" \
   --action "execute" \
   --command "backup_db" \
-  --args db1 db2 \
-  --environments NOdE
+  --args db1 \
+  --args db2 \
+  --environments NODE:dev
 ```
 
 ### List All Tasks

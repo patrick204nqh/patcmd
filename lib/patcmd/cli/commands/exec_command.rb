@@ -10,7 +10,7 @@ module Patcmd
         def exec(category, name, action)
           task = config_manager.find_task(category, name, action)
           if task
-            executor = TaskExecutor.new(task, options)
+            executor = Tasks::TaskExecutor.new(task, options)
             executor.execute
           else
             puts "Task not found for category '#{category}', name '#{name}', and action '#{action}'."

@@ -2,8 +2,8 @@
 
 module Patcmd
   module CLI
-    module Services
-      Dir[File.join(__dir__, "services", "*.rb")].each do |file|
+    module Tasks
+      Dir[File.join(__dir__, "tasks", "*.rb")].each do |file|
         require file
       end
     end

@@ -9,16 +9,21 @@ module Patcmd
         end
 
         def display(task)
-          @output.puts "Category: #{task["category"]}"
-          @output.puts "  Name: #{task["name"]}"
-          @output.puts "  Action: #{task["action"]}"
-          @output.puts "  Description: #{task["description"]}"
-          @output.puts "  Path: #{task["path"]}"
-          @output.puts "  Command: #{task["command"]}"
-          @output.puts "  Args: #{task["args"].join(" ")}" if task["args"]&.any?
-          if task["environments"]&.any?
-            envs = task["environments"].map { |k, v| "#{k}=#{v}" }.join(", ")
-            @output.puts "  Environments: #{envs}"
+          @output.puts "Category: #{task.category}"
+          @output.puts "  Name: #{task.name}"
+          @output.puts "  Description: #{task.description}" if task.description
+          @output.puts "  Path: #{task.path}" if task.path
+          @output.puts "  Actions:"
+          task.actions.each do |action|
+            @output.puts "    Name: #{action.name}"
+            @output.puts "    Description: #{action.description}" if action.description
+            @output.puts "    Command: #{action.command}"
+            @output.puts "    Path: #{action.path}" if action.path
+            @output.puts "    Args: #{action.args.join(" ")}" unless action.args.empty?
+            @output.puts "    Environments:"
+            action.environments.each do |key, value|
+              @output.puts "      #{key}: #{value}"
+            end
           end
           @output.puts "-" * 40
         end

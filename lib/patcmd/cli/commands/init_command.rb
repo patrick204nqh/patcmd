@@ -9,7 +9,7 @@ module Patcmd
         desc "init", "Initialize the PatCmd configuration"
         def init
           config_manager.init_config
-          puts "Configuration initialized at #{config_manager.config_path}"
+          puts "Configuration initialized at #{config_manager.path}"
         end
       end
     end

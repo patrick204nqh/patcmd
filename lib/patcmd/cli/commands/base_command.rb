@@ -11,7 +11,7 @@ module Patcmd
 
         def initialize(*args)
           super
-          @config_manager = ConfigurationManager.new(options[:config])
+          @config_manager = ConfigManager.new(options[:config])
           @logger = Logger.new(verbose: options[:verbose])
         end
 

@@ -7,8 +7,10 @@ module Patcmd
         default_task :add
 
         desc "add", "Add a new task to the config"
-        method_option :name,         aliases: "-n", required: true, desc: "Task name"
-        method_option :description,  aliases: "-d", required: true, desc: "Task description"
+        method_option :name, aliases: "-n", required: true, desc: "Task name"
+        method_option :description,
+          aliases: "-d",
+          desc: "Task description (required if task doesn't exist)"
         method_option :category,     aliases: "-c", required: true, desc: "Category name"
         method_option :path,         aliases: "-p", required: true, desc: "Execution path"
         method_option :action,       aliases: "-a", required: true, desc: "Action name"
@@ -17,14 +19,20 @@ module Patcmd
         method_option :environments, aliases: "-e", type: :hash, default: {}, desc: "Environment variables"
 
         def add
-          task = Services::TaskBuilder.build_from_options(options)
-          Services::TaskValidator.validate(task)
+          # Validate & build the task from options
+          task = Tasks::TaskBuilder.build_from_options(options)
+
+          logger.info("Adding task '#{task.name}' under category '#{task.category}' with action '#{options["action"]}'...")
+          # Save the task
+
           config_manager.add_task(task)
+
+          # Display the task details
           Presenters::TaskPresenter.new($stdout).display(task)
           logger.success(
-            "Added task '#{task["name"]}' under category '#{task["category"]}' with action '#{task["action"]}'.",
+            "Added task '#{task.name}' under category '#{task.category}' with action '#{options["action"]}'.",
           )
-        rescue Services::TaskValidator::ValidationError => e
+        rescue => e
           logger.error("Error: #{e.message}")
           exit(1)
         end

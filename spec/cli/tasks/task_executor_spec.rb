@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe(Patcmd::CLI::TaskExecutor) do
+RSpec.describe(Patcmd::CLI::Tasks::TaskExecutor) do
   let(:task) do
     {
       "description" => "Test Task",
