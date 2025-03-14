@@ -1,14 +1,23 @@
 # frozen_string_literal: true
 
-require "patcmd/cli/logger"
-require "patcmd/cli/file_manager"
-require "patcmd/cli/path_resolver"
-require "patcmd/cli/config_manager"
-require "patcmd/cli/presenters"
-require "patcmd/cli/tasks"
-require "patcmd/cli/commands"
+require "thor"
+require_relative "commands/init"
+require_relative "commands/list"
+require_relative "commands/add"
+require_relative "commands/exec"
 
 module Patcmd
-  module CLI
+  class CLI < Thor
+    class << self
+      def exit_on_failure?
+        true
+      end
+    end
+
+    # Register subcommands with Thor
+    register(Commands::Init, "init", "init", "Initialize configuration file")
+    register(Commands::List, "list", "list", "List all tasks")
+    register(Commands::Add, "add", "add NAME", "Add a new task")
+    register(Commands::Exec, "exec", "exec NAME", "Exec a specific task")
   end
 end
