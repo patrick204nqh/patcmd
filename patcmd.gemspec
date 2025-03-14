@@ -10,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.authors = ["Huy Nguyen"]
   spec.email = ["patrick204nqh@gmail.com"]
 
-  spec.summary = "A CLI tool for running tasks quickly."
-  spec.description = "PatCmd allows you to define and execute tasks using a simple command-line interface."
+  spec.summary = "A CLI tool to manage tasks using a YAML configuration."
+  spec.description = "Patcmd is a Ruby CLI tool that centralizes command execution via a YAML config file."
   spec.homepage = "https://github.com/patrick204nqh/patcmd"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.0.0"
@@ -19,6 +19,7 @@ Gem::Specification.new do |spec|
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/patrick204nqh/patcmd"
   spec.metadata["changelog_uri"] = "https://github.com/patrick204nqh/patcmd/blob/main/CHANGELOG.md"
+  spec.metadata["documentation_uri"] = "https://www.rubydoc.info/gems/patcmd"
 
   gemspec = File.basename(__FILE__)
   spec.files = IO.popen(["git", "ls-files", "-z"], chdir: __dir__, err: IO::NULL) do |ls|

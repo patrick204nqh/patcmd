@@ -1,111 +1,104 @@
-# PatCmd
+# Patcmd
 
 [![Gem Version](https://badge.fury.io/rb/patcmd.svg)](https://badge.fury.io/rb/patcmd)
 [![Build Status](https://github.com/patrick204nqh/patcmd/actions/workflows/ruby.yml/badge.svg)](https://github.com/patrick204nqh/patcmd/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-PatCmd is a Ruby-based command-line interface (CLI) tool built with Thor, designed to manage and execute tasks efficiently. Whether you're automating scripts, managing deployments, or handling routine operations, PatCmd provides a streamlined and customizable solution.
+Patcmd is a Ruby gem that provides a command-line interface (CLI) for managing and executing tasks from a YAML configuration file. It helps centralize your terminal commands into one file, making it easy to trigger frequently used tasks with memorable aliases.
 
 ## Features
 
-- **Task Management:** Easily add, list, and execute tasks.
-- **Configurable Environments:** Define environment variables per task.
-- **Extensible:** Add new commands and functionalities as needed.
-- **User-Friendly:** Intuitive CLI with clear help documentation.
+- **Centralized Task Management:** Store your commands and scripts in a single YAML configuration file.
+- **Preconfigured Default Task:** When initialized, the configuration file includes a default "hello" task that prints "Hello World."
+- **Flexible Task Definitions:** Each task can have a command, arguments, environment variables, description, and group.
+- **Easy Command-Line Interface:** Use Thor to quickly add, list, and run tasks.
 
 ## Installation
 
-Ensure you have [Ruby](https://www.ruby-lang.org/en/downloads/) (version 3.0 or higher) installed on your system.
+Add this line to your application's Gemfile:
 
-### Install via RubyGems
+```ruby
+gem 'patcmd'
+```
+
+Then execute:
+
+```bash
+bundle install
+```
+
+Or install it yourself as:
 
 ```bash
 gem install patcmd
 ```
 
-### From Source
-
-1. Clone the Repository:
-
-```bash
-git clone https://github.com/yourusername/patcmd.git
-cd patcmd
-```
-
-2. Build the Gem:
-
-```bash
-gem build patcmd.gemspec
-```
-
-3. Install the Gem Locally:
-
-```bash
-gem install ./patcmd-0.1.0.gem
-```
-
 ## Usage
 
-After installation, you can use `patcmd` directly from your terminal.
+### Initializing the Configuration File
 
-### Initialize Configuration
-
-Initialize the PatCmd configuration file. This creates a default configuration file where tasks are stored.
+To create the configuration file (located at `~/.patcmd/config.yml`), run:
 
 ```bash
 patcmd init
 ```
 
-Example Output:
+This command creates the file with a default task named **hello**. The default task is defined as follows:
 
-```bash
-Configuration initialized at /home/username/.patcmd/config.yml
+```yaml
+---
+tasks:
+  hello:
+    command: bash
+    args:
+    - "-c"
+    - '''echo "$GREETING, $TARGET! Args: $ARG1, $ARG2"'''
+    env:
+      GREETING: Hello
+      TARGET: World
+      ARG1: Foo
+      ARG2: Bar
+    description: Print Hello World with multiple arguments and environment variables
+    group: default
 ```
 
-### Add a New Task
+### Listing Tasks
 
-```bash
-patcmd add --name "Backup" \
-  --description "Backup the database" \
-  --category "Utility" \
-  --path "/usr/local/bin" \
-  --action "execute" \
-  --command "backup_db" \
-  --args db1 \
-  --args db2 \
-  --environments NODE:dev
-```
-
-### List All Tasks
-
-Display all configured tasks.
+To list all available tasks, run:
 
 ```bash
 patcmd list
 ```
 
-### Execute a Task
+### Adding a Task with Multiple Arguments and Environment Variables
+
+You can add custom tasks using the CLI. For example, to add a task called **complex** that demonstrates multiple arguments and environment variables, run:
 
 ```bash
-patcmd exec Utility Backup execute
+patcmd add complex \
+  --command "bash" \
+  --args "-c" "echo 'Value1: $VAL1, Value2: $VAL2, extra args: arg1 arg2'" \
+  --env VAL1=value1,VAL2=value2 \
+  --description "A complex task with many args and env variables" \
+  --group custom
 ```
 
-### Help
+*Note:* The `--env` option is expected to be passed as a hash. Adjust the input format as needed based on your CLI parsing.
 
-Access help information for all commands or a specific command.
+### Running a Task
+
+To execute a task, for example the default **hello** task, run:
 
 ```bash
-patcmd help
-patcmd help add
-patcmd help list
+patcmd exec hello
 ```
 
-### Configuration
+This command executes the task, applying the defined environment variables and arguments.
 
-PatCmd uses a YAML configuration file to store tasks and settings. The default configuration file is located at `~/.patcmd/config.yml`. You can specify a different configuration file using the --config option.
+## Contributing
 
-**Example:**
+Bug reports and pull requests are welcome on GitHub at [https://github.com/patrick204nqh/patcmd](https://github.com/patrick204nqh/patcmd).
 
-```bash
-patcmd list --config=/path/to/custom_config.yml
-```
+## License
+
+The gem is available as open source under the terms of the [MIT License](LICENSE.txt).
