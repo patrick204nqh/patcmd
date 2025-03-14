@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "thor"
+require_relative "commands/version"
 require_relative "commands/init"
 require_relative "commands/list"
 require_relative "commands/add"
@@ -15,6 +16,7 @@ module Patcmd
     end
 
     # Register subcommands with Thor
+    register(Commands::Version, "version", "version", "Show Patcmd gem version")
     register(Commands::Init, "init", "init", "Initialize configuration file")
     register(Commands::List, "list", "list", "List all tasks")
     register(Commands::Add, "add", "add NAME", "Add a new task")
